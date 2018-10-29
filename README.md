@@ -1,46 +1,6 @@
 # T2_3-Formais
 Repositório para o trabalho 2 e 3 de Linguagens Formais - 18.2
 
-
-Gramática livre da pseudolinguagem para qual será feito o analisador léxico e sintático.
-
-< program > ::= < block >
-
-< block > ::= {< decls >< stmts >}
-
-< decls > ::= < decl >< decls > | ε
-
-< decl > ::= < type > id ;
-
-< type > ::= basic < types >
-
-< types > ::= [ num ] < types > | ε
-
-< stmts > ::= < stmt >< stmts > | ε
-< stmt > ::= < loc >=< bool > ;
-| < matched_if >
-| < open_if >
-| while ( < bool > )stmt
-| do < stmt > while ( < bool > );
-| break ;
-| < block >
-< matched_if > ::= if (< bool >)then < matched_if > else < matched_if >
-< open_if > ::= if (< bool >)then < stmt >
-| if (< bool >)then < mached_if > else < open_if >
-< loc > ::= id < locs >
-< locs > ::= [ < bool > ] < locs > | ε
-< bool > ::= < join > | < join > || < bool >
-< join > ::= < equality > | < equality > || < join >
-< equality > ::= < rel > | < rel > == < equality > | < rel > ! = < equality >
-< rel > ::= < expr > < < expr > | < expr > <= < expr >
-| < expr > >= < expr > | < expr > > < expr > | < expr >
-< expr > ::= < term >< exprs >
-< exprs > ::= + < term >< exprs > | − < term >< exprs > | ε
-< term > ::= < unary >< terms >
-< terms > ::= ∗ < unary >< terms > | / < unary >< terms > | ε
-< unary > ::= ! < unary > | − < unary > | < f actor >
-< factor > ::= (bool) | < loc > | num | real | true | false
-
 Tipos de tokens:
 
 | Token_Name | Description | Example | E.R. |
@@ -50,4 +10,26 @@ Tipos de tokens:
 | endOfLine | terminates a line| ; | nd |
 | id | identifies a variable | obraId | nd |
 | type | identifies a predfined type | int | nd |
-
+| sizeArray | identifies a size of a array or matrix | [32] | nd |
+| openPar | identifies a open paranthesis | ( | nd |
+| closePar | identifies a open paranthesis | ) | nd | 
+| while | reserved word for while block | while | nd |
+| do | reserved word for do block | do | nd |
+| break | reserved word for break a loop block | break | nd |
+| if | reserved word for if block | if | nd |
+| then | reserved word for then of a if block | then | nd |
+| else | reserved word for else of a if block | else | nd |
+| DifOp | reserverd chars for logical difference | != | nd |
+| EqualOp | reserverd chars for logical equality | == | nd |
+| GreatOp | reserverd char for logical great | > | nd |
+| GreatEqualOp | reserverd chars for logical great or equal | >= | nd |
+| LessEqualOp | reserverd chars for logical less or equal | <= | nd |
+| LessOp | reserverd char for logical less | < | nd |
+| AddOp | reserved char for math sum | + | nd |
+| MinusOp | reserved char for math minus | - | nd |
+| MultOp | reserved char for math mult | * | nd |
+| DivOp | reserved char for math divide | / | nd |
+| int | identifies a integer number for a operation | 23412 | nd |
+| real | identifies a real number for a operation | 23.321 | nd |
+| true | reserverd word for logical true | true | nd |
+| false | reserverd word for logical false | false | nd |
