@@ -5,11 +5,17 @@ Repositório para o trabalho 2 e 3 de Linguagens Formais - 18.2
 Gramática livre da pseudolinguagem para qual será feito o analisador léxico e sintático.
 
 < program > ::= < block >
+
 < block > ::= {< decls >< stmts >}
+
 < decls > ::= < decl >< decls > | ε
+
 < decl > ::= < type > id ;
+
 < type > ::= basic < types >
+
 < types > ::= [ num ] < types > | ε
+
 < stmts > ::= < stmt >< stmts > | ε
 < stmt > ::= < loc >=< bool > ;
 | < matched_if >
