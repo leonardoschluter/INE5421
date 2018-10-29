@@ -38,10 +38,10 @@ Gramática livre da pseudolinguagem para qual será feito o analisador léxico e
 Tipos de tokens:
 
 | Token_Name | Description | Example | E.R. |
-| ---      | ---       |
-| openBlock | opens a block | { | |
-| closeBlock | opens a block | } | |
-| endOfLine | terminates a line| ; | |
-| id | identifies a variable | obraId | |
-| type | identifies a predfined type | int | |
+| ---------- | ----------- | ------- | ---- |
+| openBlock | opens a block | { | nd |
+| closeBlock | opens a block | } | nd |
+| endOfLine | terminates a line| ; | nd |
+| id | identifies a variable | obraId | nd |
+| type | identifies a predfined type | int | nd |
 
