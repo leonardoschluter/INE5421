@@ -17,6 +17,8 @@ public class Automato {
         this.transitionTable = new HashMap<>();
         this.firstState = firstState;
         this.endStates = endStates;
+        this.actualState = firstState;
+        this.prevState = firstState;
     }
 
     public void addCell(String state, String symbol, String destination){
@@ -31,11 +33,21 @@ public class Automato {
     // Throw error when it is a state that has no transition defined for the inputSymbol
     public boolean compute(String inputSymbol) {
         if(this.transitionTable.get(actualState).containsKey(inputSymbol)){
+            prevState = actualState;
             actualState = this.transitionTable.get(actualState).get(inputSymbol);
             return true;
         }else{
             return false;
         }
+    }
+
+    public void reset(){
+        this.prevState = firstState;
+        this.actualState = firstState;
+    }
+
+    public void goBack(){
+        this.actualState = this.prevState;
     }
 
     public boolean isAtFinalState(){

@@ -1,6 +1,7 @@
 package compilador.model;
 
 import compilador.util.AutomatoScanner;
+import compilador.util.CustomBuffer;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -39,4 +40,18 @@ public class AutomatoUnion {
     }
 
 
+    public Token getNextToken(CustomBuffer text) {
+        List<Automato> acceptingAutomatos = new ArrayList<>();
+        while(text.hasNext()){
+            for ( Automato automato: this.automatos){
+                automato.compute(Character.toString(text.getNext()));
+                if(automato.isAtFinalState()){
+                    acceptingAutomatos.add(automato);
+                }else if(acceptingAutomatos.contains(automato)){
+                    acceptingAutomatos.remove(automato);
+                }
+            }
+        }
+        return new Token();
+    }
 }
