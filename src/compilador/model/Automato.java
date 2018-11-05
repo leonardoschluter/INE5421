@@ -55,4 +55,8 @@ public class Automato {
     }
 
 
+    public TokenType getFinalStateType(char lastChar) {
+        return null;
+        //TODO como mapear no automato o que cada estado final representa ?
+    }
 }

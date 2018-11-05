@@ -32,4 +32,8 @@ public class CustomBuffer {
         }
         return text.toString();
     }
+
+    public char getLastChar(){
+        return text[end];
+    }
 }
