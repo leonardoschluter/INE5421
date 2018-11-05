@@ -1,0 +1,12 @@
+package compilador;
+
+import compilador.model.AutomatoUnion;
+
+public class Main {
+
+    public static void main(String[] args) {
+        System.out.print("Hello World !");
+        AutomatoUnion bigTable = new AutomatoUnion();
+        bigTable.generateAllAutomatos();
+    }
+}
