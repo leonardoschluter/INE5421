@@ -11,6 +11,7 @@ public class Automato {
     String firstState;
     Set<String> endStates;
     String actualState;
+    String prevState;
 
     public Automato(String firstState, Set<String> endStates){
         this.transitionTable = new HashMap<>();
