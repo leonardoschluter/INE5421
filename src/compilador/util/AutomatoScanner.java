@@ -22,7 +22,7 @@ public class AutomatoScanner {
         String firstState = "";
         Set<String> endStates = new HashSet<>();
 
-        String[] line = input.nextLine().trim().split(";");
+        String[] line = input.nextLine().trim().split(":");
         if( line.length != 0 ){
             if( line[0].trim().equals(HEADER_STR)){
                 firstState = this.findFirstState(line);
@@ -32,7 +32,7 @@ public class AutomatoScanner {
         String[] states = removeIdentifierChars(line);
         Automato automato = new Automato(firstState, endStates);
         while (input.hasNextLine()) {
-            String[] transitions = input.nextLine().trim().split(";");
+            String[] transitions = input.nextLine().trim().split(":");
             String symbol = transitions[0].trim();
            if(!symbol.isEmpty() && !symbol.equals(HEADER_STR)){
                for(int i = 1;i < transitions.length; i++){
