@@ -35,13 +35,19 @@ public class Tokenizer {
             automato.compute(Character.toString(next));
             if(automato.isAtFinalState()){
                 didAccept = true;
-            }else if(didAccept){
-                text.goBack();
+            }else if(didAccept && automato.isAtErrorState()){
                 done = true;
-                automato.goBack();
+            }else {
+                didAccept = false;
             }
         }
-        automato.getFinalStateType(text.getLastChar());
-        return new Token();
+        if(done) {
+            text.goBack(2);
+            automato.goBack();
+        }else{
+            text.goBack(1);
+        }
+        Token token = new Token(automato.getFinalStateType(), text.getLimitedText());
+        return token;
     }
 }

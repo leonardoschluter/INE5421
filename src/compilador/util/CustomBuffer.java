@@ -17,8 +17,8 @@ public class CustomBuffer {
         return c;
     }
 
-    public void goBack(){
-        end = -2;
+    public void goBack(Integer quantity){
+        end = end-quantity;
     }
 
     public boolean hasNext(){
@@ -27,7 +27,7 @@ public class CustomBuffer {
 
     public String getLimitedText(){
         StringBuffer text =  new StringBuffer("");
-        for(int i = begin; i < end; i ++){
+        for(int i = begin; i <= end; i ++){
             text.append(this.text[i]);
         }
         return text.toString();

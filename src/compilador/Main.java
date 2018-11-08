@@ -10,7 +10,12 @@ public class Main {
         System.out.print("Hello World !");
         Tokenizer bigTable = new Tokenizer();
         bigTable.generateAutomato();
-        CustomBuffer cb = new CustomBuffer("teste");
+        CustomBuffer cb = new CustomBuffer("123.4");
         Token token = bigTable.getNextToken(cb);
+        if (token.text.isEmpty()){
+            System.out.print("ETAAAA");
+        }else{
+            System.out.print("foiii");
+        }
     }
 }

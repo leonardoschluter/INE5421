@@ -54,9 +54,12 @@ public class Automato {
         return endStates.contains(actualState);
     }
 
+    public boolean isAtErrorState(){
+        return TokenType.ERROR.name().equals(actualState);
+    }
 
-    public TokenType getFinalStateType(char lastChar) {
-        return null;
-        //TODO como mapear no automato o que cada estado final representa ?
+
+    public TokenType getFinalStateType() {
+        return TokenType.valueOf(actualState);
     }
 }
