@@ -32,7 +32,7 @@ public class AutomatoScanner {
         String[] states = removeIdentifierChars(line);
         Automato automato = new Automato(firstState, endStates);
         while (input.hasNextLine()) {
-            String[] transitions = input.nextLine().trim().split(":");
+            String[] transitions = input.nextLine().replaceAll("#", "").replaceAll("\\*", "").trim().split(":");
             String symbol = transitions[0].trim();
            if(!symbol.isEmpty() && !symbol.equals(HEADER_STR)){
                for(int i = 1;i < transitions.length; i++){

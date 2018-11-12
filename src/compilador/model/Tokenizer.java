@@ -16,7 +16,7 @@ public class Tokenizer {
     public void generateAutomato(){
         AutomatoScanner scanner = new AutomatoScanner();
         try {
-            URL url = getClass().getResource("../data/bigTable.txt");
+            URL url = getClass().getResource("../data/bigTable1.txt");
             File file = new File(url.getPath());
             this.automato = scanner.readFileTxt(file.getPath());
         }catch (IOException e){
@@ -27,10 +27,10 @@ public class Tokenizer {
     }
 
 
-    public Token getNextToken(CustomBuffer text) {
+    public Token getNextToken(CustomBuffer text, SymbolTable symbolTable) {
         boolean didAccept = false;
         boolean done = false;
-        while(text.hasNext() && !done){
+        while(text.hasNext() && !done && !text.isSpace()){
             char next = text.getNext();
             automato.compute(Character.toString(next));
             if(automato.isAtFinalState()){
@@ -41,13 +41,26 @@ public class Tokenizer {
                 didAccept = false;
             }
         }
-        if(done) {
+        if(done && automato.isAtErrorState()){
+            // TODO aqui devemos tratar o erro léxico !
+        }else if(done) {
             text.goBack(2);
             automato.goBack();
-        }else{
+        }else if(!text.isSpace()){
             text.goBack(1);
         }
-        Token token = new Token(automato.getFinalStateType(), text.getLimitedText());
+
+        Token token;
+        if(symbolTable.lookUp(text.getLimitedText())){
+            token = symbolTable.getToken(text.getLimitedText());
+        }else{
+            token = new Token(automato.getFinalStateType(), text.getLimitedText());
+        }
+        text.moveFoward();
         return token;
+    }
+
+    public void resetAutomato() {
+        automato.reset();
     }
 }

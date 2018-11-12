@@ -22,7 +22,16 @@ public class CustomBuffer {
     }
 
     public boolean hasNext(){
-        return end < this.text.length ;
+        return end < this.text.length;
+    }
+
+    public boolean isSpace(){
+        char space = ' ';
+        if(this.hasNext()){
+            return text[end] == space;
+        }else{
+            return false;
+        }
     }
 
     public String getLimitedText(){
@@ -35,5 +44,21 @@ public class CustomBuffer {
 
     public char getLastChar(){
         return text[end];
+    }
+
+    public void moveFoward() {
+        this.begin = this.end;
+    }
+
+    public void skipSpace() {
+        if(isSpace()){
+            end++;
+            this.moveFoward();
+        }
+    }
+
+    public boolean isEndOFFile() {
+        char endOfFile = '$';
+        return endOfFile == text[end];
     }
 }
