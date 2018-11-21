@@ -39,7 +39,6 @@ public class AutomatoScanner {
                    String transition = transitions[i].trim();
                    if(!transition.equals("")) {
                        automato.addCell(states[i], symbol,transition);
-                       System.out.println(states[i] + " | Simbolo: " + symbol + " | transição" + transition);
                    }
                }
            }

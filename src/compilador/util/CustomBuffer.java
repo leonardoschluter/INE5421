@@ -36,8 +36,10 @@ public class CustomBuffer {
 
     public String getLimitedText(){
         StringBuffer text =  new StringBuffer("");
-        for(int i = begin; i <= end; i ++){
-            text.append(this.text[i]);
+        for(int i = begin; i <= end; i ++) {
+            if (this.text[i] != '$'){
+                text.append(this.text[i]);
+            }
         }
         return text.toString();
     }
