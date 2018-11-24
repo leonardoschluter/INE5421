@@ -22,11 +22,11 @@ public class Automato {
     }
 
     public void addCell(String state, String symbol, String destination){
-        if(!this.transitionTable.containsKey(state)){
-            this.transitionTable.put(state, new HashMap<>());
+        if(!this.transitionTable.containsKey(state)){ // se a tabela ainda não tiver o estado
+            this.transitionTable.put(state, new HashMap<>()); // cria um novo map para esse estado
         }
-        if(!this.transitionTable.get(state).containsKey(symbol)){
-            this.transitionTable.get(state).put(symbol, destination);
+        if(!this.transitionTable.get(state).containsKey(symbol)){ // se o estado ainda não tem uma transição pelo símoblo,
+            this.transitionTable.get(state).put(symbol, destination); // cria a transição
         }
     }
 

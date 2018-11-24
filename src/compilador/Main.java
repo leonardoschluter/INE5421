@@ -1,9 +1,11 @@
 package compilador;
 
+import compilador.model.Grammar;
 import compilador.model.SymbolTable;
 import compilador.model.Tokenizer;
 import compilador.model.Token;
 import compilador.util.CustomBuffer;
+import compilador.util.GrammarScanner;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,13 @@ public class Main {
             System.out.println(token.text + " - " + token.type.name());
         }
 
-
+        GrammarScanner grammarScanner = new GrammarScanner();
+        Grammar grammar = new Grammar();
+        try{
+            grammar = grammarScanner.readGrammarTxt();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(grammar.toString());
     }
 }
