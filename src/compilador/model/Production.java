@@ -24,9 +24,11 @@ public class Production {
     public List<String> getTerminals(){
         if(terminals.isEmpty()) {
             List<String> result = new ArrayList<>();
+            List<TokenType> result2 = new ArrayList<>();
             for (String symbol : this.tail) {
                 if (!symbol.contains("<$")) {
                     result.add(symbol);
+                    result2.add(TokenType.fromString(symbol));
                 }
             }
             this.terminals = result;

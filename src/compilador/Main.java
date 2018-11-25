@@ -57,6 +57,9 @@ public class Main {
         HashMap<NonTerminal, Set<String>> firsts =  grammar.calculateFirsts();
 
         grammar.calculateFollows();
+        grammar.createParsingTable();
+
+
         //TODO compute first and follows
         System.out.println(grammar.toString());
     }

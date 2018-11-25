@@ -16,6 +16,7 @@ public class Grammar {
         productions = new HashMap<>();
     }
 
+
     private void addTerminal(String terminal){
         terminals.add(terminal);
     }
@@ -128,56 +129,21 @@ public class Grammar {
         }
     }
 
-    private boolean isEvereyFollowCalculated() {
-        boolean result = true;
-        for(NonTerminal nonTerminal: this.nonTerminals.values()){
-            if(!nonTerminal.isFollowCalculated){
-                result = false;
-            }
-        }
-        return  result;
-    }
-
     public NonTerminal findNonTerminal(String id) {
         return this.nonTerminals.get(id);
     }
+
+    public ParsingTable createParsingTable(){
+        ParsingTable m = new ParsingTable();
+        for (NonTerminal nonTerminal : this.nonTerminals.values()) {
+            for (List<Production> productions : this.productions.values()) {
+                for(Production production: productions){
+                    for(String terminal: production.head.getFirsts(this)){
+                        m.addProductionToTable(terminal, production.head, production);
+                    }
+                }
+            }
+        }
+        return m;
+    }
 }
-
-
-
-/*
-        HashMap<NonTerminal, Set<String>> result = new HashMap<>();
-        for(int i = 0; i < this.nonTerminals.size(); i++){ // itera sobre todos os não terminais da gramática
-            NonTerminal nonTerminal = this.nonTerminals.get(i); // pega o nao terminal em específico
-            Set<String> firsts = new HashSet<>(); // cria o conjunto dos firsts
-            for(int j = 0; j < this.productions.get(nonTerminal).size(); j++){ // para todas as produções do não terminal
-                Production production = this.productions.get(nonTerminal).get(j);
-                if(production.isFirstSymbolTerminal()){ // verifica se o primeiro símbolo da produção é terminal,
-                    firsts.add(production.getFirstTerminal()); // se for terminal, podemos adicionar ao conjunto de firsts do não terminal que é cabeça da produção.
-                }
-            }
-            if(result.containsKey(nonTerminal)){
-                firsts.addAll(result.get(nonTerminal));
-            }
-            result.put(nonTerminal, firsts); // salva os firsts do não terminal num mapa para utilizar futuramente
-        }
-
-        //tendo calculado os firsts mais fáceis, podemos então verificar as produções que são
-
-        for(int i = 0; i < this.nonTerminals.size(); i++){ // itera sobre todos os não terminais da gramática
-            NonTerminal nonTerminal = this.nonTerminals.get(i); // pega o nao terminal em específico
-            Set<String> firsts = new HashSet<>(); // cria o conjunto dos firsts
-            for(int j = 0; j < this.productions.get(nonTerminal).size(); j++){ // para todas as produções do não terminal
-                Production production = this.productions.get(nonTerminal).get(j);
-                if(!production.isFirstSymbolTerminal()){
-                    production.getNonTerminals();
-                    firsts.addAll(production.getFirsts());
-                }
-            }
-            if(result.containsKey(nonTerminal)){
-                firsts.addAll(result.get(nonTerminal));
-            }
-            result.put(nonTerminal, firsts); // salva os firsts do não terminal num mapa para utilizar futuramente
-        }
-
-        return result;*/
