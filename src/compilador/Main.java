@@ -1,9 +1,6 @@
 package compilador;
 
-import compilador.model.Grammar;
-import compilador.model.SymbolTable;
-import compilador.model.Tokenizer;
-import compilador.model.Token;
+import compilador.model.*;
 import compilador.util.CodeReader;
 import compilador.util.CustomBuffer;
 import compilador.util.GrammarScanner;
@@ -12,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Main {
 
@@ -53,6 +52,12 @@ public class Main {
         }catch (Exception e){
             e.printStackTrace();
         }
+        grammar.generateTerminalsAndNon();
+
+        HashMap<NonTerminal, Set<String>> firsts =  grammar.calculateFirsts();
+
+        grammar.calculateFollows();
+        //TODO compute first and follows
         System.out.println(grammar.toString());
     }
 }

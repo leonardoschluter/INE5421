@@ -1,6 +1,7 @@
 package compilador.util;
 
 import compilador.model.Grammar;
+import compilador.model.NonTerminal;
 import compilador.model.Production;
 
 import java.io.File;
@@ -18,10 +19,11 @@ public class GrammarScanner {
         Grammar grammar = new Grammar();
         while (input.hasNext()){
             String[] line = input.nextLine().split("::=");
-            String head = line[0];
-            String[] productions = line[1].split("\\|");
+            NonTerminal head = new NonTerminal(line[0]);
+            String[] productions = line[1].split("\\| ");
             for(int i = 0; i< productions.length; i++){
                 Production production = this.scanProduction(productions[i], head);
+                head.addProduction(production);
                 grammar.addProduction(production);
             }
         }
@@ -29,32 +31,13 @@ public class GrammarScanner {
         return grammar;
     }
 
-    private Production scanProduction(String text, String head) {
-        text = text.replaceAll(" ","");
+    private Production scanProduction(String text, NonTerminal head) {
+        String[] chars = text.split(" ");
         Production production = new Production(head);
-        char[] chars = text.toCharArray();
-        boolean isReadingNonTerminal = false;
-        String nonTerminal = "";
-        String terminal = "";
-        for(char c: chars){
-            if(c == '<'){
-                isReadingNonTerminal = true;
-                if(!terminal.isEmpty()){
-                    production.addSymbolToTail(terminal);
-                    terminal = "";
-                }
-            }else if(c == '>'){
-                isReadingNonTerminal = false;
-                production.addSymbolToTail("<"+nonTerminal+">");
-                nonTerminal = "";
-            }else if(isReadingNonTerminal){
-                nonTerminal = nonTerminal.concat(Character.toString(c));
-            }else{
-                terminal = terminal.concat(Character.toString(c));
+        for(String c: chars){
+            if(!c.isEmpty()) {
+                production.addSymbolToTail(c);
             }
-        }
-        if(!terminal.isEmpty()){
-            production.addSymbolToTail(terminal);
         }
         return production;
     }
