@@ -60,6 +60,10 @@ public class Automato {
 
 
     public TokenType getFinalStateType() {
-        return TokenType.valueOf(actualState);
+        try {
+            return TokenType.valueOf(actualState);
+        }catch( IllegalArgumentException e){
+            return TokenType.ERROR;
+        }
     }
 }

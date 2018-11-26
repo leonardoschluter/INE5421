@@ -16,13 +16,17 @@ public class Grammar {
         productions = new HashMap<>();
     }
 
+    public boolean isSymbolTerminal(String symbol){
+        return this.terminals.contains(symbol);
+    }
+
 
     private void addTerminal(String terminal){
         terminals.add(terminal);
     }
 
-    private void mergeTerminals(List<String> terminals){
-        for(String terminal: terminals){
+    private void mergeTerminals(Map<String, TokenType> terminals){
+        for(String terminal: terminals.keySet()){
             if(!this.terminals.contains(terminal)){
                 this.terminals.add(terminal);
             }
@@ -134,10 +138,10 @@ public class Grammar {
     }
 
     public ParsingTable createParsingTable(){
-        ParsingTable m = new ParsingTable();
-        for (NonTerminal nonTerminal : this.nonTerminals.values()) {
-            for (List<Production> productions : this.productions.values()) {
-                for(Production production: productions){
+        ParsingTable m = new ParsingTable(this);
+        for (NonTerminal nonTerminal : this.nonTerminals.values()) { // para todos não terminais
+            for (List<Production> productions : this.productions.values()) { // para todas produções
+                for(Production production: productions){ // para todas as produções
                     for(String terminal: production.head.getFirsts(this)){
                         m.addProductionToTable(terminal, production.head, production);
                     }

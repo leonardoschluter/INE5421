@@ -47,20 +47,21 @@ public class Main {
 
         GrammarScanner grammarScanner = new GrammarScanner();
         Grammar grammar = new Grammar();
+
         try{
             grammar = grammarScanner.readGrammarTxt();
         }catch (Exception e){
             e.printStackTrace();
         }
+
         grammar.generateTerminalsAndNon();
-
-        HashMap<NonTerminal, Set<String>> firsts =  grammar.calculateFirsts();
-
+        grammar.calculateFirsts();
         grammar.calculateFollows();
-        grammar.createParsingTable();
+        ParsingTable M = grammar.createParsingTable();
+        M.printParsingTable();
+        M.parse(tokens, symbolTable);
 
 
-        //TODO compute first and follows
         System.out.println(grammar.toString());
     }
 }

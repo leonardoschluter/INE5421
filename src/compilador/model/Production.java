@@ -7,31 +7,27 @@ public class Production {
     public static final String EPSILON = "ε";
     NonTerminal head;
     List<String> tail;
-    private List<String> terminals;
+    private Map<String, TokenType> terminals;
     private Map<String, NonTerminal> nonTerminals;
 
     public Production(NonTerminal head){
         this.head = head;
         this.tail = new ArrayList<>();
         this.nonTerminals = new HashMap<>();
-        this.terminals = new ArrayList<>();
+        this.terminals = new HashMap<>();
     }
 
     public void addSymbolToTail(String symbol){
         tail.add(symbol);
     }
 
-    public List<String> getTerminals(){
+    public Map<String, TokenType> getTerminals(){
         if(terminals.isEmpty()) {
-            List<String> result = new ArrayList<>();
-            List<TokenType> result2 = new ArrayList<>();
             for (String symbol : this.tail) {
                 if (!symbol.contains("<$")) {
-                    result.add(symbol);
-                    result2.add(TokenType.fromString(symbol));
+                    this.terminals.put(symbol, TokenType.fromString(symbol));
                 }
             }
-            this.terminals = result;
         }
 
         return this.terminals;
@@ -56,18 +52,14 @@ public class Production {
 
     public boolean isFirstSymbolTerminal() {
         if(!this.tail.isEmpty() && !this.terminals.isEmpty()) {
-            return this.tail.get(0).equals(this.terminals.get(0));
+            return this.terminals.containsKey(this.tail.get(0));
         }else{
             return false;
         }
     }
 
     public boolean isSymbolTerminal(String terminal){
-        return this.terminals.contains(terminal);
-    }
-
-    public String getFirstTerminal() {
-        return this.terminals.get(0);
+        return this.terminals.containsKey(terminal);
     }
 
     public Set<String> getFirsts(Grammar grammar) {
@@ -168,5 +160,13 @@ public class Production {
 
     public Set<String> getFollowOfHead() {
         return this.head.getFollows();
+    }
+
+    public String getReadableProduction() {
+        String result = this.head.id + " :== ";
+        for(String terminal: tail){
+            result = result + terminal + " ";
+        }
+        return result;
     }
 }

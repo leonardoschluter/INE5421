@@ -11,7 +11,7 @@ public enum TokenType {
     CLOSE_PAR(")"),
     WHILE("while"),
     DO("do"),
-    BREAK("break"),
+    BREAKE("break"),
     IF("if"),
     THEN("then"),
     ELSE("else"),
